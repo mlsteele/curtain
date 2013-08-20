@@ -6,7 +6,7 @@ import math
 class Strobe(Plugin):
     def __init__(self):
         super(Strobe, self).__init__()
-	self.period = 6
+    	self.period = 6
 
     def draw(self):
         h = math.fmod(self.time * 2, 2)
@@ -20,4 +20,3 @@ class Strobe(Plugin):
         r, g, b = hsv_to_rgb(h, 1, i)
 
         self.canvas.clear(r, g, b)
-

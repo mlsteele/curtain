@@ -1,26 +1,17 @@
+import time, os, math
 from curtain import Curtain, frame_length
 from plugin import Plugin
-import time, os, math
-
-plugins = []
-
-for filename in os.listdir('plugins'):
-    name, extension = os.path.splitext(filename)
-    if extension == '.py' and name != '__init__':
-        module = __import__('plugins.' + name).__dict__[name]
-
-        for var in module.__dict__.values():
-            if isinstance(var, type) and Plugin in var.__bases__:
-                plugins.append(var)
-
-        
-curtain = Curtain()
 from plugins.strobe import Strobe
 from plugins.rainbow import Rainbow
 from plugins.snakes import Snakes
 from plugins.ec import EC
 from plugins.fancyrainbow import FancyRainbow
-plugins = [FancyRainbow(), EC(), Strobe()]
+
+curtain = Curtain()
+
+# plugins = [FancyRainbow(), EC(), Strobe()]
+plugins = [EC()]
+# plugins = [Snakes()]
 
 def weighted_average(a, b, f):
     average = {}
@@ -48,4 +39,3 @@ while True:
     sleep_length = frame_length - (end - start)
     if sleep_length > 0:
         time.sleep(sleep_length)
-

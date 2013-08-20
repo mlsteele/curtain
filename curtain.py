@@ -3,7 +3,8 @@ from random import randint
 
 width = 15
 height = 5
-frame_length = 0.6 #0.005
+# frame_length = 0.6 #0.005
+frame_length = 0.03
 
 brightness = 0.3 #0.012 dim  # 0.08 bright
 
@@ -77,7 +78,7 @@ class Canvas(dict):
     def add_letter(self, letter, offset_x, offset_y, r, g, b):
         for x, y in letter.pixel_list:
             self.add_pixel(offset_x + x, offset_y + y, r, g, b)
- 
+
     def clear(self, r=0, g=0, b=0):
         for x in range(self.width):
             for y in range(self.height):

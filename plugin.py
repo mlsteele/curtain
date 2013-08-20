@@ -15,4 +15,3 @@ class Plugin(object):
 
     def draw(self):
         pass
-

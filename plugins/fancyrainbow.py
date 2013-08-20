@@ -10,8 +10,7 @@ class FancyRainbow(Plugin):
         super(FancyRainbow, self).__init__()
 
     def draw(self):
-        self.hue += 0.001
+        self.hue += 0.005
         self.hue = self.hue % 360
-	r, g, b = hsv_to_rgb(self.hue, 1, 1)
+        r, g, b = hsv_to_rgb(self.hue, 1, 1)
         self.canvas.clear(r, g, b)
-	time.sleep(0.01)
