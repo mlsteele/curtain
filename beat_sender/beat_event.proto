@@ -1,0 +1,4 @@
+message BeatEvent{
+    required int32  bar = 1;
+    optional int32  sub_bar = 2;
+};
