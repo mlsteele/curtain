@@ -21,10 +21,10 @@ def weighted_average(a, b, f):
         average[k] = (f*r1 + (1-f)*r2, f*g1 + (1-f)*g2, f*b1 + (1-f)*b2)
     return average
 
-frame = 0
 
+frame = 0
 while True:
-    start = time.clock()
+    frame_start = time.clock()
 
     frame += 1
 
@@ -35,7 +35,6 @@ while True:
 
     curtain.send_color_dict(plugin.canvas)
 
-    end = time.clock()
-    sleep_length = frame_length - (end - start)
-    if sleep_length > 0:
-        time.sleep(sleep_length)
+    frame_end = time.clock()
+    sleep_length = frame_length - (frame_end - frame_start)
+    time.sleep(sleep_length)

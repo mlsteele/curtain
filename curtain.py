@@ -4,7 +4,9 @@ from random import randint
 width = 15
 height = 5
 # frame_length = 0.6 #0.005
-frame_length = 0.03
+# frame_length = 0.03
+frames_per_second = 30
+frame_length = 1.0 / frames_per_second
 
 brightness = 0.3 #0.012 dim  # 0.08 bright
 
