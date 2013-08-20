@@ -6,6 +6,7 @@ class BeatReceiver(threading.Thread):
     def __init__(self, sub = None, 
                  beats = True, 
                  sub_beats = False,
+                 change_scene = False,
                  callback = False):
 
         self.callback = callback
@@ -15,8 +16,12 @@ class BeatReceiver(threading.Thread):
         self.ctx = zmq.Context()
         self.sub = self.ctx.socket(zmq.SUB)
 
-        self.sub.setsockopt(zmq.SUBSCRIBE, 'bar')
-        self.sub.setsockopt(zmq.SUBSCRIBE, 'sub_bar')
+        if beats:
+            self.sub.setsockopt(zmq.SUBSCRIBE, 'b')
+        if sub_beats:
+            self.sub.setsockopt(zmq.SUBSCRIBE, 's')
+        if change_scene:
+            self.sub.setsockopt(zmq.SUBSCRIBE, 'c')
         if sub:
             self.sub.connect(sub)
         else:
@@ -37,13 +42,14 @@ class BeatReceiver(threading.Thread):
             if self.callback:
                 self.callback(beat_event)
             else:
-                print beat_event
-
+                if beat_event.type == beat_event_pb2.BEAT:
+                    print "Beat"
+                pass
 
 
 
 if __name__ == '__main__':
-    n = BeatReceiver()
+    n = BeatReceiver(sub_beats = True)
     n.start()
 
     time.sleep(10)

@@ -34,6 +34,7 @@ class BeatBlaster(object):
         beat_event.sub_beat = sub_beat
         self.publisher.send_multipart(['s', beat_event.SerializeToString()])
 
+
     def change_scene(self, scene_number = 0):
         beat_event = beat_event_pb2.BeatEvent()
         beat_event.type = beat_event_pb2.CHANGE_SCENE
