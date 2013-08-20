@@ -1,5 +1,6 @@
 import array, socket
 from random import randint
+import config
 
 width = 15
 height = 5
@@ -56,12 +57,17 @@ class Curtain(object):
         self.socket.sendto(packet, (self.host, self.port))
 
 
+if config.RENDER_PYGAME:
+    from pygame_curtain import PygameCurtain
+    Curtain = PygameCurtain
+
+
 class Canvas(dict):
     """ Canvas stores pixels. """
     width = 15
     height = 5
 
-    def __init__(self, width, height):
+    def __init__(self):
         self.clear()
 
     def draw_pixel(self, x, y, r, g, b):
