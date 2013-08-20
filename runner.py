@@ -10,6 +10,7 @@ from plugins.fancyrainbow import FancyRainbow
 from plugins.sometext import SomeText
 from plugins.sidescroll import SideScroll
 from plugins.wave import Wave
+from plugins.heightlines import HeightLines
 
 curtain = Curtain()
 
@@ -47,12 +48,14 @@ class SlideShow(object):
 
 
 slideshow = SlideShow(period=15)
-slideshow.add(FancyRainbow)
 slideshow.add(EC)
-slideshow.add(Snakes2)
 slideshow.add(Wave)
+slideshow.add(Snakes2)
+slideshow.add(FancyRainbow)
 slideshow.add(Strobe)
-slideshow.add(SideScroll)
+slideshow.add(Snakes)
+# slideshow.add(SideScroll)
+slideshow.add(HeightLines)
 
 frame = 0
 while True:

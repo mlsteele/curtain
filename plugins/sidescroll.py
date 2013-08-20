@@ -9,7 +9,7 @@ import math, time, random
 class SideScroll(Plugin):
     def __init__(self):
         super(SideScroll, self).__init__()
-        self.sst = SideScrollText(list("NO SHOES NO BURGERS!"), width)
+        self.sst = SideScrollText(list("WELCOME TO EAST CAMPUS!"), width)
 
     def draw(self):
         self.canvas.clear(*hsv_to_rgb(0, 0, 0))
