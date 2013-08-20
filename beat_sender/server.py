@@ -19,33 +19,44 @@ class BeatBlaster(object):
 
         time.sleep(1)
 
-    def beat(self, bar):
+    def beat(self, beat):
         beat_event = beat_event_pb2.BeatEvent()
-        beat_event.bar = bar
-        beat_event.sub_bar = 0
-        self.publisher.send_multipart(['bar', beat_event.SerializeToString()])
+        beat_event.beat = beat
+        beat_event.type = beat_event_pb2.BEAT
+        beat_event.sub_beat = 0
+        self.publisher.send_multipart(['b', beat_event.SerializeToString()])
 
-    def sub_beat(self, bar, sub_bar):
+
+    def sub_beat(self, beat, sub_beat):
         beat_event = beat_event_pb2.BeatEvent()
-        beat_event.bar = bar
-        beat_event.sub_bar = sub_bar
-        self.publisher.send_multipart(['sub_bar', beat_event.SerializeToString()])
-    def close(self):
-        pass
-                         
+        beat_event.beat = beat
+        beat_event.type = beat_event_pb2.SUB_BEAT
+        beat_event.sub_beat = sub_beat
+        self.publisher.send_multipart(['s', beat_event.SerializeToString()])
+
+    def change_scene(self, scene_number = 0):
+        beat_event = beat_event_pb2.BeatEvent()
+        beat_event.type = beat_event_pb2.CHANGE_SCENE
+        self.publisher.send_multipart(['c', beat_event.SerializeToString()])
+
+
+
+
+
 
 
 if __name__ == '__main__':
     try:
         n = BeatBlaster("tcp://*:8000")
         while True:
-            n.beat(1 ) 
-            n.sub_beat(1, 5 ) 
-            print "sent"
+            for bar in range(4):
+                n.beat(bar) 
+                for x in range(255):
+                    n.sub_beat(bar, x) 
+                    time.sleep(1./255)
             
-            time.sleep(1)
+            #time.sleep(.25)
     except KeyboardInterrupt:
         print "Exiting"
-        n.close()
 
 
