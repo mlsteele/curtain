@@ -13,36 +13,37 @@ from plugins.wave import Wave
 
 curtain = Curtain()
 
-#plugins = [FancyRainbow(), EC(), Strobe()]
-# plugins = [EC()]
-# plugins = [Snakes2()]
-# plugins = [Snakes2(), EC(), FancyRainbow()]
-# plugins = [SideScroll()]
-plugins = [Wave()]
+
+# plugins = [FancyRainbow, EC, Strobe]
+# plugins = [EC]
+# plugins = [Snakes2]
+# plugins = [Snakes2, EC, FancyRainbow]
+# plugins = [SideScroll]
+# plugins = [Wave]
+plugins = [SideScroll, Wave, Snakes2, FancyRainbow]
+# plugin rotation period in seconds
+plugin_period = 10
+active_plugin = plugins[0]()
 
 
-def weighted_average(a, b, f):
-    average = {}
-    for k in set(a.keys() + b.keys()):
-        r1, g1, b1 = a.get(k, (0, 0, 0))
-        r2, g2, b2 = b.get(k, (0, 0, 0))
-        average[k] = (f*r1 + (1-f)*r2, f*g1 + (1-f)*g2, f*b1 + (1-f)*b2)
-    return average
+def rotate_plugins():
+    print "rotating plugins"
+    global plugins
+    global active_plugin
+    plugins = [plugins.pop()] + plugins
+    active_plugin = plugins[0]()
 
 
 frame = 0
+plugin_start = time.time()
 while True:
     frame_start = time.clock()
-
     frame += 1
-
-    for plugin in plugins:
-        plugin.step()
-
-    plugin = plugins[(int(frame / 600) + 2) % len(plugins)]
-
-    curtain.send_color_dict(plugin.canvas)
-
+    if time.time() > plugin_start + plugin_period:
+        rotate_plugins()
+        plugin_start = time.time()
+    active_plugin.step()
+    curtain.send_color_dict(active_plugin.canvas)
     frame_end = time.clock()
     sleep_length = frame_length - (frame_end - frame_start)
     time.sleep(sleep_length)
