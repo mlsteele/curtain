@@ -9,6 +9,7 @@ from plugins.ec import EC
 from plugins.fancyrainbow import FancyRainbow
 from plugins.sometext import SomeText
 from plugins.sidescroll import SideScroll
+from plugins.wave import Wave
 
 curtain = Curtain()
 
@@ -16,7 +17,8 @@ curtain = Curtain()
 # plugins = [EC()]
 # plugins = [Snakes2()]
 # plugins = [Snakes2(), EC(), FancyRainbow()]
-plugins = [SideScroll()]
+# plugins = [SideScroll()]
+plugins = [Wave()]
 
 
 def weighted_average(a, b, f):
