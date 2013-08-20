@@ -13,15 +13,15 @@ class EC(Plugin):
         self.text = ['E', 'bolt', 'C']
 
     def draw(self):
-        # speed defined here
-        h = math.fmod(self.time / 3, 2)
+        h = math.fmod(self.time, 2)
         if h >= 1:
             h = 2 - h
 
         x = int(round(self.n))
         offset = 1.0 / (len(self.text) + 1)
 
-        self.canvas.clear(*hsv_to_rgb(h, 1, 0.03))
+        r, g, b = 
+        self.canvas.clear(*r, g, b)
 
         h = math.fmod(h + offset, 1)
 

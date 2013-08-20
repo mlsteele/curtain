@@ -10,10 +10,10 @@ from plugins.fancyrainbow import FancyRainbow
 
 curtain = Curtain()
 
-# plugins = [FancyRainbow(), EC(), Strobe()]
-# plugins = [EC()]
-# plugins = [Snakes()]
-plugins = [Snakes2()]
+#plugins = [FancyRainbow(), EC(), Strobe()]
+#plugins = [EC()]
+#plugins = [Snakes()]
+plugins = [Snakes2(), EC(), FancyRainbow()]
 
 def weighted_average(a, b, f):
     average = {}
