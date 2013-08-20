@@ -1,5 +1,6 @@
 import pygame
 import sys
+import config
 from curtain import width, height
 
 
@@ -40,11 +41,15 @@ class PygameCurtain(object):
         self._render_cells()
 
     def _render_cells(self):
-        for column in self.cells:
-            for cell in column:
-                cell.rect
-                cell.color
-                pygame.draw.rect(self.screen, cell.color, cell.rect)
+        for x in xrange(width):
+            for y in xrange(height):
+                cell = self.cells[x][y]
+                if not config.RENDER_FAULTS:
+                    pygame.draw.rect(self.screen, cell.color, cell.rect)
+                else:
+                    BROKEN_PIXELS = [[0, 4], [1,4], [2,4], [14,4], [13,4], [12,4]]
+                    if [x, y] not in BROKEN_PIXELS:
+                        pygame.draw.rect(self.screen, cell.color, cell.rect)
 
     def send_color_dict(self, color_dict):
         """
