@@ -39,9 +39,6 @@ class Curtain(object):
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.settimeout(1)
 
-    def send_packet(self, packet):
-        self.socket.sendto(packet, (self.host, self.port))
-
     def send_color_dict(self, color_dict):
         array = [0x00] * 512
 
@@ -53,13 +50,18 @@ class Curtain(object):
                     index = id_map[x, y]
                     array[index:index+3] = colors
 
-        self.send_packet(packet_header + array_to_bytes(array))
+        self._send_packet(packet_header + array_to_bytes(array))
+
+    def _send_packet(self, packet):
+        self.socket.sendto(packet, (self.host, self.port))
+
 
 class Canvas(dict):
+    """ Canvas stores pixels. """
     width = 15
     height = 5
 
-    def __init__(self):
+    def __init__(self, width, height):
         self.clear()
 
     def draw_pixel(self, x, y, r, g, b):
@@ -81,4 +83,3 @@ class Canvas(dict):
         for x in range(self.width):
             for y in range(self.height):
                 self[x, y] = (r, g, b)
-
