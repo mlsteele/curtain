@@ -4,15 +4,16 @@ from curtain import width, height
 
 
 class Cell(object):
-    def __init__(self, position, size):
+    def __init__(self, position, size, padding):
         self.position = position
         self.size = size
+        self.padding = padding
         self.rect = pygame.Rect((
             self.position[0] * self.size,
-            self.position[1] * self.size
+            self.position[1] * self.size,
             ),(
-            self.size,
-            self.size
+            self.size - self.padding,
+            self.size - self.padding,
         ))
         self.color = 150, 0, 0
 
@@ -24,12 +25,17 @@ class PygameCurtain(object):
 
         # measurements in pixels
         self.cell_scale = 60
+        self.cell_padding = 10
         self.size_px = self.size_cells[0] * self.cell_scale, self.size_cells[1] * self.cell_scale
 
         self.screen = pygame.display.set_mode(self.size_px)
 
         # initialize grid of cells
-        self.cells = [[Cell((x,y), self.cell_scale) for y in xrange(self.size_cells[1])] for x in xrange(self.size_cells[0])]
+        self.cells = [[
+            Cell((x,y), size=self.cell_scale, padding=self.cell_padding)
+            for y in xrange(self.size_cells[1])]
+            for x in xrange(self.size_cells[0])
+        ]
 
         self._render_cells()
 
