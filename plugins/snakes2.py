@@ -28,7 +28,7 @@ class BSSnake(object):
 class Snake(object):
     def __init__(self):
         self.pos = [0, 0]
-        self.length = 10
+        self.length = 7
         self.grid = [[0 for _ in range(height)] for _ in range(width)]
 
         self.grid[self.pos[0]][self.pos[1]] = self.length
@@ -59,7 +59,7 @@ class Snakes(Plugin):
     def __init__(self):
         super(Snakes, self).__init__()
 
-        n_snakes = 1
+        n_snakes = 3
         self.snakes = [Snake() for _ in range(n_snakes)]
 
     def draw(self):
