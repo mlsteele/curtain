@@ -4,26 +4,6 @@ from plugin import Plugin
 from colorsys import hsv_to_rgb
 import math, time, random
 
-class BSSnake(object):
-    """ Data container for a snake's position. """
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-        self.dx = 1
-        self.dy = 0
-        self.data = [[-100000] * height for x in range(width)]
-        self.time = 0
-
-    def step(self):
-        if random.random() > 0.6:
-            flip = random.choice([-1, +1])
-            self.dx, self.dy = self.dy * flip, self.dx * flip
-
-        self.x = (self.x + self.dx + width) % width
-        self.y = (self.y + self.dy + height) % height
-
-        self.data[self.x][self.y] = self.time
-        self.time += 1
 
 class Snake(object):
     def __init__(self, length=7):
