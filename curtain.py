@@ -71,11 +71,15 @@ class Canvas(dict):
         self.clear()
 
     def draw_pixel(self, x, y, r, g, b):
-        self[x, y] = r, g, b
+        """ Silently ignore out of bounds pixels. """
+        if 0 <= x < self.width and 0 <= y < self.height:
+            self[x, y] = r, g, b
 
     def add_pixel(self, x, y, r, g, b):
-        r1, g1, b1 = self[x, y]
-        self[x, y] = r1 + r, g1 + g, b1 + b
+        """ Silently ignore out of bounds pixels. """
+        if 0 <= x < self.width and 0 <= y < self.height:
+            r1, g1, b1 = self[x, y]
+            self[x, y] = r1 + r, g1 + g, b1 + b
 
     def draw_letter(self, letter, offset_x, offset_y, r, g, b):
         for x, y in letter.pixel_list:

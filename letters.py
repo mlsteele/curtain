@@ -35,6 +35,7 @@ pixel_lists = {
     '8': [(0, 1), (0, 0), (2, 0), (2, 1), (0, 2), (2, 2), (0, 3), (1, 0), (1, 4), (2, 3), (1, 2), (0, 4), (2, 4)],
     '9': [(0, 1), (0, 0), (2, 0), (2, 1), (0, 2), (2, 2), (1, 0), (1, 4), (2, 3), (1, 2), (0, 4), (2, 4)],
     '0': [(0, 1), (0, 0), (2, 0), (2, 1), (0, 2), (2, 2), (0, 3), (1, 0), (1, 4), (2, 3), (0, 4), (2, 4)],
+    ' ': [],
     '[': [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 0), (1, 4)],
     '(': [(0, 1), (0, 2), (0, 3), (1, 0), (1, 4)],
     ']': [(2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (1, 0), (1, 4)],
@@ -78,11 +79,16 @@ pixel_lists = {
 class Letter(object):
     def __init__(self, name, pixel_list):
         self.pixel_list = pixel_list
-        xs = [x for x, y in pixel_list]
-        self.min_x, self.max_x = min(xs), max(xs)
-        ys = [y for x, y in pixel_list]
-        self.min_y, self.max_y = min(ys), max(ys)
-    
+        # hack exception for spaces
+        if name == ' ':
+            self.min_x, self.max_x = 0, 2
+            self.min_y, self.max_y = 0, 3
+        else:
+            xs = [x for x, y in pixel_list]
+            self.min_x, self.max_x = min(xs), max(xs)
+            ys = [y for x, y in pixel_list]
+            self.min_y, self.max_y = min(ys), max(ys)
+
         self.width = self.max_x + 1
 
 

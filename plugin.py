@@ -3,7 +3,6 @@ from curtain import Canvas, frame_length
 class Plugin(object):
     def __init__(self):
         self.canvas = Canvas()
-        self.done = False
 
         self.time = 0.0
         self.frame = 0
@@ -14,4 +13,4 @@ class Plugin(object):
         self.draw()
 
     def draw(self):
-        pass
+        raise NotImplementedError("plugin must override draw()")

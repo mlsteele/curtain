@@ -8,13 +8,15 @@ from plugins.snakes2 import Snakes as Snakes2
 from plugins.ec import EC
 from plugins.fancyrainbow import FancyRainbow
 from plugins.sometext import SomeText
+from plugins.sidescroll import SideScroll
 
 curtain = Curtain()
 
 #plugins = [FancyRainbow(), EC(), Strobe()]
-#plugins = [EC()]
-#plugins = [Snakes()]
-plugins = [Snakes2(), EC(), FancyRainbow()]
+# plugins = [EC()]
+# plugins = [Snakes2()]
+# plugins = [Snakes2(), EC(), FancyRainbow()]
+plugins = [SideScroll()]
 
 
 def weighted_average(a, b, f):
