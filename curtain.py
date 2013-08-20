@@ -63,11 +63,7 @@ class Canvas(dict):
         self.clear()
 
     def draw_pixel(self, x, y, r, g, b):
-        if randint(1,6) == 1: # put in by timyang. makes some fraction of the
-                               # cells black.
-            self[x, y] = r, g, b
-        else:
-            self[x, y] = 0, 0, 0
+        self[x, y] = r, g, b
 
     def add_pixel(self, x, y, r, g, b):
         r1, g1, b1 = self[x, y]
