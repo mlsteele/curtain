@@ -14,36 +14,52 @@ from plugins.wave import Wave
 curtain = Curtain()
 
 
-# plugins = [FancyRainbow, EC, Strobe]
-# plugins = [EC]
-# plugins = [Snakes2]
-# plugins = [Snakes2, EC, FancyRainbow]
-# plugins = [SideScroll]
-# plugins = [Wave]
-plugins = [SideScroll, Wave, Snakes2, FancyRainbow]
-# plugin rotation period in seconds
-plugin_period = 10
-active_plugin = plugins[0]()
+class SlideShow(object):
+    def __init__(self, period):
+        """
+        `period` is in seconds.
+        """
+        self.period = period
+        self.plugins = []
+        self.active_plugin = None
+        self.timer = None
+
+    def add(self, plugin):
+        self.plugins.append(plugin)
+
+    def step(self):
+        if self.active_plugin is None:
+            self.active_plugin = self.plugins[0]()
+
+        if self.timer is None:
+            self.timer = time.time()
+
+        if time.time() > self.timer + self.period:
+            self.rotate()
+
+        self.active_plugin.step()
+
+    def rotate(self):
+        print "rotating slideshow to {}".format(self.active_plugin.__class__.__name__)
+        self.plugins = self.plugins[1:] + [self.plugins[0]]
+        self.active_plugin = self.plugins[0]()
+        self.timer = time.time()
 
 
-def rotate_plugins():
-    print "rotating plugins"
-    global plugins
-    global active_plugin
-    plugins = [plugins.pop()] + plugins
-    active_plugin = plugins[0]()
-
+slideshow = SlideShow(period=15)
+slideshow.add(FancyRainbow)
+slideshow.add(EC)
+slideshow.add(Snakes2)
+slideshow.add(Wave)
+slideshow.add(Strobe)
+slideshow.add(SideScroll)
 
 frame = 0
-plugin_start = time.time()
 while True:
     frame_start = time.clock()
     frame += 1
-    if time.time() > plugin_start + plugin_period:
-        rotate_plugins()
-        plugin_start = time.time()
-    active_plugin.step()
-    curtain.send_color_dict(active_plugin.canvas)
+    slideshow.step()
+    curtain.send_color_dict(slideshow.active_plugin.canvas)
     frame_end = time.clock()
     sleep_length = frame_length - (frame_end - frame_start)
     time.sleep(sleep_length)
