@@ -7,6 +7,7 @@ from plugins.snakes import Snakes
 from plugins.snakes2 import Snakes as Snakes2
 from plugins.ec import EC
 from plugins.fancyrainbow import FancyRainbow
+from plugins.sometext import SomeText
 
 curtain = Curtain()
 
@@ -14,6 +15,7 @@ curtain = Curtain()
 #plugins = [EC()]
 #plugins = [Snakes()]
 plugins = [Snakes2(), EC(), FancyRainbow()]
+
 
 def weighted_average(a, b, f):
     average = {}

@@ -4,12 +4,20 @@ from colorsys import hsv_to_rgb
 from letters import letters
 import math, time, random
 
-class EC(Plugin):
+class SomeText(Plugin):
     def __init__(self):
-        super(EC, self).__init__()
+        super(self.__class__, self).__init__()
 
         self.n = 0
         self.d = True
+        self.text = ['S', 'H', 'O', 'E', 'S']
+        self.text = ['E', 'A', 'S', 'T']
+        self.text = ['4', 'E']
+        self.text = ['4', 'bolt', 'E']
+        self.text = ['7', 'L', 'E', 'V']
+        #self.text = 'E'
+        #self.text = ['E', 'bolt', 'C']
+        #self.text.split()
         self.text = ['bolt', 'E', 'C', 'bolt']
 
     def draw(self):
