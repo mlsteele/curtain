@@ -26,10 +26,11 @@ class BSSnake(object):
         self.time += 1
 
 class Snake(object):
-    def __init__(self):
-        self.pos = [0, 0]
-        self.length = 7
+    def __init__(self, length=7):
+        self.pos = [int(random.random() * width), int(random.random() * height)]
+        self.length = length
         self.grid = [[0 for _ in range(height)] for _ in range(width)]
+        self.color = random.choice([0, 0.12, 0.38, 0.60, 0.75])
 
         self.grid[self.pos[0]][self.pos[1]] = self.length
 
@@ -59,47 +60,26 @@ class Snakes(Plugin):
     def __init__(self):
         super(Snakes, self).__init__()
 
-        n_snakes = 3
+        n_snakes = 4
         self.snakes = [Snake() for _ in range(n_snakes)]
 
     def draw(self):
-        self.canvas.clear(0, 0, 1.0 / 255.0)
+        if random.random() > 0.95:
+            self.snakes.pop()
+            self.snakes.append(Snake(length=random.randint(1, 14)))
+
+        self.canvas.clear(*hsv_to_rgb(0, 0, 0))
 
         # setp all snakes
         for snake in self.snakes:
             snake.step()
 
+        # render snakes
         for snake in self.snakes:
             for x in range(width):
                 for y in range(height):
                     val = snake.grid[x][y]
                     if val > 0:
-                        self.canvas.draw_pixel(x, y, *hsv_to_rgb(0, 1, float(val) / snake.length))
-
-
-    # def draw(self):
-    #     h = math.fmod(self.time / 2, 2)
-
-    #     if h >= 1:
-    #         h = 2 - h
-
-    #     self.canvas.clear(0, 0, 1.0 / 255.0)
-
-    #     # setp all snakes
-    #     for snake in self.snakes:
-    #         snake.step()
-
-    #     for snake in self.snakes:
-    #         h = math.fmod(h + 1.0 / len(self.snakes), 1)
-    #         for x in range(width):
-    #             for y in range(height):
-    #                 v = max(0, float(snake.data[x][y] - snake.time + 20.0) / 20.0)
-    #                 v = min(brightness, v**2 * brightness * 4)
-    #                 if v > 0.01:
-
-    #                     # TEMP
-    #                     h = 0
-    #                     v = 0
-
-    #                     r, g, b = hsv_to_rgb(h, 1, v)
-    #                     self.canvas.draw_pixel(x, y, r, g, b)
+                        self.canvas.draw_pixel(x, y, *hsv_to_rgb(
+                            snake.color, 1, float(val) / snake.length
+                        ))
