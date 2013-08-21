@@ -1,4 +1,6 @@
-import time, os, math
+import time
+from threading import Thread
+
 from curtain import Curtain, frame_length
 from plugin import Plugin
 from plugins.strobe import Strobe
@@ -12,10 +14,9 @@ from plugins.sidescroll import SideScroll
 from plugins.wave import Wave
 from plugins.heightlines import HeightLines
 
-curtain = Curtain()
-
 
 class SlideShow(object):
+    """ Rotating list of plugins. """
     def __init__(self, period):
         """
         `period` is in seconds.
@@ -25,10 +26,12 @@ class SlideShow(object):
         self.active_plugin = None
         self.timer = None
 
-    def add(self, plugin):
-        self.plugins.append(plugin)
+    def add(self, plugin_constructor):
+        """ `plugin_constructor` is the plugin class. """
+        self.plugins.append(plugin_constructor)
 
     def step(self):
+        # initialize active_plugin
         if self.active_plugin is None:
             self.active_plugin = self.plugins[0]()
 
@@ -47,22 +50,37 @@ class SlideShow(object):
         self.timer = time.time()
 
 
-slideshow = SlideShow(period=15)
-slideshow.add(EC)
-slideshow.add(Wave)
-slideshow.add(Snakes2)
-slideshow.add(FancyRainbow)
-slideshow.add(Strobe)
-slideshow.add(Snakes)
-# slideshow.add(SideScroll)
-slideshow.add(HeightLines)
+class ViewManager(object):
+    def __init__(self, curtain, bg):
+        """
+        `bg` is a SlideShow of plugins to run in the background.
+        """
+        self.curtain = curtain
+        self.bg = bg
 
-frame = 0
-while True:
-    frame_start = time.clock()
-    frame += 1
-    slideshow.step()
-    curtain.send_color_dict(slideshow.active_plugin.canvas)
-    frame_end = time.clock()
-    sleep_length = frame_length - (frame_end - frame_start)
-    time.sleep(sleep_length)
+    def start(self):
+        """ Start the render loop. (blocking) """
+        frame = 0
+        while True:
+            frame_start = time.clock()
+            frame += 1
+            self.bg.step()
+            self.curtain.send_color_dict(self.bg.active_plugin.canvas)
+            frame_end = time.clock()
+            sleep_length = frame_length - (frame_end - frame_start)
+            time.sleep(sleep_length)
+
+
+bg = SlideShow(15)
+bg.add(EC)
+bg.add(Wave)
+bg.add(Snakes2)
+bg.add(FancyRainbow)
+bg.add(Strobe)
+bg.add(Snakes)
+bg.add(SideScroll)
+bg.add(HeightLines)
+
+curtain = Curtain()
+vm = ViewManager(curtain=curtain, bg=bg)
+vm.start()
