@@ -22,3 +22,15 @@ class Plugin(object):
 
     def draw(self):
         raise NotImplementedError("plugin must override draw()")
+
+
+class FinitePlugin(Plugin):
+    """ A plugin which can be finished. """
+    def __init__(self):
+        super(FinitePlugin, self).__init__()
+        self.is_done = False
+
+    def step(self):
+        if self.is_done:
+            print "WARN: FinitePlugin stepping after done."
+        super(FinitePlugin, self).step()

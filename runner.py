@@ -24,6 +24,7 @@ class SlideShow(object):
         self.period = period
         self.plugins = []
         self.active_plugin = None
+        # timer for each slide
         self.timer = None
 
     def add(self, plugin_constructor):
@@ -35,10 +36,16 @@ class SlideShow(object):
         if self.active_plugin is None:
             self.active_plugin = self.plugins[0]()
 
+        # one-time intiialize timer
         if self.timer is None:
             self.timer = time.time()
 
+        # rotate when out of time (even if finite plugin)
         if time.time() > self.timer + self.period:
+            self.rotate()
+
+        # rotate finite plugins
+        if hasattr(self.active_plugin, 'is_done') and self.active_plugin.is_done:
             self.rotate()
 
         self.active_plugin.step()
