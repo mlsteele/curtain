@@ -1,3 +1,4 @@
 .DS_Store
 *.pyc
-*.ini
+twitter_config.ini
+config_local.py

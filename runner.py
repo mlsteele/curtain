@@ -16,15 +16,16 @@ from plugins.beatpulse import BeatPulse
 from plugins.heightlines import HeightLines
 
 
-bg = SlideShow(15)
-# bg.add(EC)
-# bg.add(Wave)
-# bg.add(Snakes2)
-# bg.add(FancyRainbow)
-bg.add(BeatPulse)
-# bg.add(Snakes)
-# bg.add(SideScrollCreator("WELCOME TO EAST CAMPUS!"))
-# bg.add(HeightLines)
+bg = SlideShow(period=15)
+bg.add(EC)
+bg.add(Wave)
+bg.add(Snakes2)
+bg.add(FancyRainbow)
+if config.ENABLE_BEATS:
+    bg.add(BeatPulse)
+bg.add(Snakes)
+bg.add(SideScrollCreator("WELCOME TO EAST CAMPUS!"))
+bg.add(HeightLines)
 
 curtain = Curtain()
 vm = ViewManager(curtain=curtain, bg=bg)
@@ -32,15 +33,12 @@ vm = ViewManager(curtain=curtain, bg=bg)
 if config.ENABLE_TWITTER:
     from twitter_client import TwitterCrawler
 
-    def twitter_thread():
-        def on_tweet(tweet):
-            print "tweet: {}".format(tweet)
-            vm.interrupt(SideScrollCreator(tweet.text.upper()))
+    def on_tweet(tweet):
+        print "tweet: {}".format(tweet)
+        vm.interrupt(SideScrollCreator(tweet.text.upper()))
 
-        twc = TwitterCrawler(callback=on_tweet)
-        twc.start()
-
-    Thread(target=twitter_thread).start()
+    twc = TwitterCrawler(callback=on_tweet)
+    twc.start()
 
 if config.ENABLE_BEATS:
     from beat_sender.client import BeatReceiver
