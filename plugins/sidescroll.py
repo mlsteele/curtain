@@ -7,9 +7,9 @@ import math, time, random
 
 
 class SideScroll(FinitePlugin):
-    def __init__(self):
+    def __init__(self, text="SCROLLING TEXT"):
         super(SideScroll, self).__init__()
-        self.sst = SideScrollText(list("WELCOME TO EAST CAMPUS!"))
+        self.sst = SideScrollText(list(text))
 
     def draw(self):
         self.canvas.clear(*hsv_to_rgb(0, 0, 0))
@@ -39,3 +39,9 @@ class SideScrollText(object):
         for let in self.letters:
             canvas.add_letter(let, x, 0, r, g, b)
             x += let.width + 1
+
+
+def SideScrollCreator(text):
+    def fake_custom_constructor():
+        return SideScroll(text=text)
+    return fake_custom_constructor
