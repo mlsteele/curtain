@@ -45,6 +45,12 @@ class SlideShow(object):
 
 
 class ViewManager(object):
+    """
+    Handle displaying of plugins.
+
+    Control methods (like `interrupt`) must be called from a seperate thread
+    as `start()` blocks the main thread.
+    """
     def __init__(self, curtain, bg):
         """
         `bg` is a `SlideShow` of plugins to run in the background.
@@ -72,6 +78,10 @@ class ViewManager(object):
             frame_end = time.clock()
             sleep_length = frame_length - (frame_end - frame_start)
             time.sleep(sleep_length)
+
+    def rotate_bg(self):
+        """ Skip to the next plugin in the bg slideshow. """
+        self.bg.rotate()
 
     def interrupt(self, plugin_constructor):
         """

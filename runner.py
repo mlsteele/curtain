@@ -30,7 +30,8 @@ vm = ViewManager(curtain=curtain, bg=bg)
 def foo_thread():
     time.sleep(1)
     print "hi from foo thread"
-    vm.interrupt(SideScroll)
+    # vm.interrupt(SideScroll)
+    vm.rotate_bg()
 
 t = Thread(target=foo_thread)
 t.start()
