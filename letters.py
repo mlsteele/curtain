@@ -76,6 +76,7 @@ pixel_lists = {
     'supern': [(0, 0), (0, 1), (0, 2), (1, 0), (2, 1), (2, 2)],
 }
 
+
 class Letter(object):
     def __init__(self, name, pixel_list):
         self.pixel_list = pixel_list
@@ -92,7 +93,10 @@ class Letter(object):
         self.width = self.max_x + 1
 
 
-letters = {}
-for name, pixel_list in pixel_lists.iteritems():
-    letters[name] = Letter(name, pixel_list)
+letters = {name: Letter(name, pixel_list) for name, pixel_list in pixel_lists.iteritems()}
 
+
+def sanitize_str(s):
+    """ Convert string to be usable with letters. """
+    # throw away unkown characters
+    return [c for c in s if c in letters]

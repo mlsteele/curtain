@@ -1,7 +1,7 @@
 from curtain import width, height, brightness
 from plugin import FinitePlugin
 from colorsys import hsv_to_rgb
-from letters import letters
+from letters import letters, sanitize_str
 from string import split
 import math, time, random
 
@@ -43,5 +43,5 @@ class SideScrollText(object):
 
 def SideScrollCreator(text):
     def fake_custom_constructor():
-        return SideScroll(text=text)
+        return SideScroll(text=sanitize_str(text))
     return fake_custom_constructor
