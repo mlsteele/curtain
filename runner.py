@@ -1,3 +1,5 @@
+from threading import Thread
+import time
 from viewmanagers import SlideShow, ViewManager
 from curtain import Curtain
 from plugins.strobe import Strobe
@@ -12,7 +14,7 @@ from plugins.wave import Wave
 from plugins.heightlines import HeightLines
 
 
-bg = SlideShow(15)
+bg = SlideShow(5)
 bg.add(EC)
 bg.add(Wave)
 bg.add(Snakes2)
@@ -24,4 +26,13 @@ bg.add(HeightLines)
 
 curtain = Curtain()
 vm = ViewManager(curtain=curtain, bg=bg)
+
+def foo_thread():
+    time.sleep(1)
+    print "hi from foo thread"
+    vm.interrupt(SideScroll)
+
+t = Thread(target=foo_thread)
+t.start()
+
 vm.start()

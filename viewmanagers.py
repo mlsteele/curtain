@@ -47,10 +47,12 @@ class SlideShow(object):
 class ViewManager(object):
     def __init__(self, curtain, bg):
         """
-        `bg` is a SlideShow of plugins to run in the background.
+        `bg` is a `SlideShow` of plugins to run in the background.
         """
         self.curtain = curtain
         self.bg = bg
+        # False to watch background slidedshow.
+        self.active_plugin = None
 
     def start(self):
         """ Start the render loop. (blocking) """
@@ -58,8 +60,26 @@ class ViewManager(object):
         while True:
             frame_start = time.clock()
             frame += 1
-            self.bg.step()
-            self.curtain.send_color_dict(self.bg.active_plugin.canvas)
+            if self.active_plugin is None:
+                self.bg.step()
+                self.curtain.send_color_dict(self.bg.active_plugin.canvas)
+            else:
+                if self.active_plugin.is_done:
+                    self.active_plugin = None
+                else:
+                    self.active_plugin.step()
+                    self.curtain.send_color_dict(self.active_plugin.canvas)
             frame_end = time.clock()
             sleep_length = frame_length - (frame_end - frame_start)
             time.sleep(sleep_length)
+
+    def interrupt(self, plugin_constructor):
+        """
+        Interrupt the background slideshow with a high priority plugin.
+
+        `plugin_constructor` is the plugin class.
+        """
+        print "vm interrupted."
+        self.active_plugin = plugin_constructor()
+        if not hasattr(self.active_plugin, 'is_done'):
+            raise ValueError("Interrupt plugin must have an is_done property.")
