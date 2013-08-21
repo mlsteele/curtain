@@ -2,9 +2,9 @@ import zmq, time, threading
 import beat_event_pb2
 
 class BeatReceiver(threading.Thread):
-    
-    def __init__(self, sub = None, 
-                 beats = True, 
+
+    def __init__(self, sub = None,
+                 beats = True,
                  sub_beats = False,
                  callback = False):
 
@@ -21,7 +21,7 @@ class BeatReceiver(threading.Thread):
             self.sub.connect(sub)
         else:
             self.sub.connect("tcp://127.0.0.1:8000")
-            print "Connected"
+            print "BeatReceiver connected."
 
         time.sleep(1)
 
@@ -29,7 +29,7 @@ class BeatReceiver(threading.Thread):
     def run(self):
         self.running = True
         beat_event = beat_event_pb2.BeatEvent()
-        print "Running "
+        print "BeatReceiver running."
         while self.running:
             tag, message = self.sub.recv_multipart()
             beat_event.ParseFromString(message)
