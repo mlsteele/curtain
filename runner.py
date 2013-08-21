@@ -14,6 +14,7 @@ from plugins.sidescroll import SideScroll, SideScrollCreator
 from plugins.wave import Wave
 from plugins.beatpulse import BeatPulse
 from plugins.heightlines import HeightLines
+from plugins.conway import Conway
 
 
 bg = SlideShow(period=15)
@@ -21,6 +22,7 @@ bg.add(EC)
 bg.add(Wave)
 bg.add(Snakes2)
 bg.add(FancyRainbow)
+bg.add(Conway)
 if config.ENABLE_BEATS:
     bg.add(BeatPulse)
 bg.add(Snakes)
