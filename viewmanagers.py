@@ -93,3 +93,11 @@ class ViewManager(object):
         self.active_plugin = plugin_constructor()
         if not hasattr(self.active_plugin, 'is_done'):
             raise ValueError("Interrupt plugin must have an is_done property.")
+
+    def recv_beat(self, beat_event):
+        if self.active_plugin is None:
+            if hasattr(self.bg.active_plugin, 'recv_beat'):
+                self.bg.active_plugin.recv_beat(beat_event)
+        else:
+            if hasattr(self.active_plugin, 'recv_beat'):
+                self.active_plugin.recv_beat(beat_event)

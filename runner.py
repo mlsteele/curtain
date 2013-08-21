@@ -12,18 +12,19 @@ from plugins.fancyrainbow import FancyRainbow
 from plugins.sometext import SomeText
 from plugins.sidescroll import SideScroll, SideScrollCreator
 from plugins.wave import Wave
+from plugins.beatpulse import BeatPulse
 from plugins.heightlines import HeightLines
 
 
 bg = SlideShow(15)
-bg.add(EC)
-bg.add(Wave)
-bg.add(Snakes2)
-bg.add(FancyRainbow)
-bg.add(Strobe)
-bg.add(Snakes)
-bg.add(SideScrollCreator("WELCOME TO EAST CAMPUS!"))
-bg.add(HeightLines)
+# bg.add(EC)
+# bg.add(Wave)
+# bg.add(Snakes2)
+# bg.add(FancyRainbow)
+bg.add(BeatPulse)
+# bg.add(Snakes)
+# bg.add(SideScrollCreator("WELCOME TO EAST CAMPUS!"))
+# bg.add(HeightLines)
 
 curtain = Curtain()
 vm = ViewManager(curtain=curtain, bg=bg)
@@ -40,4 +41,15 @@ if config.ENABLE_TWITTER:
         twc.start()
 
     Thread(target=twitter_thread).start()
+
+if config.ENABLE_BEATS:
+    from beat_sender.client import BeatReceiver
+
+    def on_beat(beat_event):
+        vm.recv_beat(beat_event)
+
+    br = BeatReceiver(callback=on_beat)
+    br.start()
+
+
 vm.start()
