@@ -1,0 +1,2 @@
+pygame==1.9.1release
+twitter==1.10.0
