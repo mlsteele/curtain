@@ -7,3 +7,5 @@ RENDER_PYGAME = True
 
 # Render faulty pixels in simulator
 RENDER_FAULTS = True
+
+ENABLE_TWITTER = True

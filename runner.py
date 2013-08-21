@@ -1,6 +1,6 @@
 from threading import Thread
 import time
-from twitter_client import TwitterCrawler
+import config
 from viewmanagers import SlideShow, ViewManager
 from curtain import Curtain
 from plugins.strobe import Strobe
@@ -28,13 +28,16 @@ bg.add(HeightLines)
 curtain = Curtain()
 vm = ViewManager(curtain=curtain, bg=bg)
 
-def twitter_thread():
-    def on_tweet(tweet):
-        print "tweet: {}".format(tweet)
-        vm.interrupt(SideScrollCreator(tweet.text.upper()))
+if config.ENABLE_TWITTER:
+    from twitter_client import TwitterCrawler
 
-    twc = TwitterCrawler(callback=on_tweet)
-    twc.start()
+    def twitter_thread():
+        def on_tweet(tweet):
+            print "tweet: {}".format(tweet)
+            vm.interrupt(SideScrollCreator(tweet.text.upper()))
 
-Thread(target=twitter_thread).start()
+        twc = TwitterCrawler(callback=on_tweet)
+        twc.start()
+
+    Thread(target=twitter_thread).start()
 vm.start()
