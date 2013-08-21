@@ -1,7 +1,10 @@
 import twitter, ConfigParser, threading, time
 
+
 config = ConfigParser.ConfigParser()
-config.read(['config.ini'])
+config.read(["twitter_config.ini"])
+
+
 class Tweet(object):
     def __init__(self, text, name = None):
         self.text = text.encode('utf-8', 'ignore')
@@ -10,19 +13,20 @@ class Tweet(object):
     def __repr__(self):
         return "Tweet ('%s', '%s')" % (self.text, self.name)
 
+
 class TwitterCrawler(threading.Thread):
     """
-    This class searches twitter for a string and calls callback when new tweets 
+    This class searches twitter for a string and calls callback when new tweets
     matching it arrive.
-    
+
     Example:
 
         def print_tweet(tweet):
             print tweet
-    
+
         t = TwitterCrawler(term = "#eastcampus", callback = print_tweet, interval = 5)
         t.start()
-    
+
     """
 
     def _init_twitter(self):
@@ -36,8 +40,8 @@ class TwitterCrawler(threading.Thread):
                   access_token_key      = self.access_token_key,
                   access_token_secret   = self.access_token_secret)
 
-    def __init__(self, term = "#eastcampus", 
-                 callback = None, 
+    def __init__(self, term = "#eastcampus",
+                 callback = None,
                  interval = 5,
                  count = 1):
         self.callback = callback
@@ -50,7 +54,6 @@ class TwitterCrawler(threading.Thread):
         threading.Thread.__init__(self)
         self.setDaemon(True)
 
-
     def update(self):
         search = self.api.GetSearch(self.term, since_id = self.since_id, count = self.count)
         search = (x.AsDict() for x in search)
@@ -59,11 +62,9 @@ class TwitterCrawler(threading.Thread):
             self.since_id = tweet['id']
             tweet = Tweet(tweet['text'], tweet['user']['name'])
             if self.callback:
-            
                 self.callback(tweet)
             else:
                 print tweet
-            
 
     def run(self):
         self.running = True
@@ -72,20 +73,16 @@ class TwitterCrawler(threading.Thread):
             self.update()
             time.sleep(self.interval)
 
-
     def stop(self):
         self.running = True
 
         return self.join()
+
 
 if __name__ == '__main__':
 
     t = TwitterCrawler()
     t.start()
 
-
     while True:
-        time.sleep(1)
-
-
-
+        time.sleep(0.1)
