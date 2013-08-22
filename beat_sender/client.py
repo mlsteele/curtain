@@ -22,8 +22,11 @@ class BeatReceiver(threading.Thread):
             self.sub.setsockopt(zmq.SUBSCRIBE, 's')
         if change_scene:
             self.sub.setsockopt(zmq.SUBSCRIBE, 'c')
+	sub = "tcp://18.189.14.119:8000"
         if sub:
+	    print "NOT GETTING HERE"	
             self.sub.connect(sub)
+	    print "BeatReceiver Connected to %s " % sub
         else:
             self.sub.connect("tcp://127.0.0.1:8000")
             print "BeatReceiver connected."
@@ -49,7 +52,7 @@ class BeatReceiver(threading.Thread):
 
 
 if __name__ == '__main__':
-    n = BeatReceiver(sub_beats = True)
+    n = BeatReceiver("tcp://18.189.14.119:8000", sub_beats = True)
     n.start()
 
     time.sleep(10)

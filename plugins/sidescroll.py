@@ -34,7 +34,7 @@ class SideScrollText(object):
         if self._offset < -self.width:
             self.is_done = True
 
-    def draw(self, canvas, r=1, g=0, b=0):
+    def draw(self, canvas, r=0, g=.1, b=.7):
         x = int(self._offset)
         for let in self.letters:
             canvas.add_letter(let, x, 0, r, g, b)
