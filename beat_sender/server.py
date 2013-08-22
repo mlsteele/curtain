@@ -24,7 +24,7 @@ class BeatBlaster(object):
         beat_event.beat = beat
         beat_event.type = beat_event_pb2.BEAT
         beat_event.sub_beat = 0
-        self.publisher.send_multipart(['b', beat_event.SerializeToString()])
+        self.publisher.send_multipart(['b', beat_event.SerializeToString()], zmq.NOBLOCK )
 
 
     def sub_beat(self, beat, sub_beat):
@@ -32,13 +32,13 @@ class BeatBlaster(object):
         beat_event.beat = beat
         beat_event.type = beat_event_pb2.SUB_BEAT
         beat_event.sub_beat = sub_beat
-        self.publisher.send_multipart(['s', beat_event.SerializeToString()])
+        self.publisher.send_multipart(['s', beat_event.SerializeToString()], zmq.NOBLOCK)
 
 
     def change_scene(self, scene_number = 0):
         beat_event = beat_event_pb2.BeatEvent()
         beat_event.type = beat_event_pb2.CHANGE_SCENE
-        self.publisher.send_multipart(['c', beat_event.SerializeToString()])
+        self.publisher.send_multipart(['c', beat_event.SerializeToString()], zmq.NOBLOCK)
 
 
 
