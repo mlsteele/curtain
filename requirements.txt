@@ -1,2 +1,5 @@
 pygame==1.9.1release
 python-twitter==1.0
+protobuf==2.5.0
+pyzmq==13.1.0
+
