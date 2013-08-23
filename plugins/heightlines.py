@@ -37,14 +37,15 @@ class HeightLines(Plugin):
         # print heights
 
         # render
+        brightness = 0.5
         self.canvas.clear(*hsv_to_rgb(0, 0, 0))
         for x in xrange(width):
             for y in xrange(height):
                 if y < self.heights[x]:
                     self.canvas.draw_pixel(x, y, *hsv_to_rgb(
-                        0.45, 1, 1
+                        0.45, 1, brightness
                     ))
                 else:
                     self.canvas.draw_pixel(x, y, *hsv_to_rgb(
-                        random.choice([0.1, 0.05]), 1, 1
+                        random.choice([0.1, 0.05]), 1, brightness
                     ))

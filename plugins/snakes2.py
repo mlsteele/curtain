@@ -61,5 +61,5 @@ class Snakes(Plugin):
                     val = snake.grid[x][y]
                     if val > 0:
                         self.canvas.draw_pixel(x, y, *hsv_to_rgb(
-                            snake.color, 1, float(val) / snake.length
+                            snake.color, 1, float(val) / snake.length * 0.6
                         ))
