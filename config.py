@@ -17,6 +17,11 @@ ENABLE_TWITTER = False
 # Listen for beats
 ENABLE_BEATS = False
 
+ENABLE_QUIET_HOURS = False
+#In 24-hour time, the times of day when the curtain will be off
+#you will have to rewrite this if it contains midnight
+QUIET_HOURS_START = 300
+QUIET_HOURS_END = 800
 
 # create local settings file
 if not os.path.exists("./config_local.py"):
