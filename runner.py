@@ -53,6 +53,4 @@ if config.ENABLE_BEATS:
     br.start()
 
 
-print "vm started"
 vm.start()
-

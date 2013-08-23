@@ -62,6 +62,7 @@ class ViewManager(object):
 
     def start(self):
         """ Start the render loop. (blocking) """
+        print "ViewManager started"
         frame = 0
         while True:
             frame_start = time.clock()
@@ -89,7 +90,7 @@ class ViewManager(object):
 
         `plugin_constructor` is the plugin class.
         """
-        print "vm interrupted."
+        print "ViewManager interrupted."
         self.active_plugin = plugin_constructor()
         if not hasattr(self.active_plugin, 'is_done'):
             raise ValueError("Interrupt plugin must have an is_done property.")
