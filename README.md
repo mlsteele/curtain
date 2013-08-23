@@ -3,13 +3,23 @@
 ## Setup
 
 ### Installation
-* install (some subset) of the prereqs from requirements.txt
+Install (some subset) of the prereqs from requirements.txt
+
+Pygame is required for the simulator, the rest are only required for hype
+features.
 
 ### Configuration
-* check on config.py
+Look at but try not to change `config.py`.
 
-### Run!
-* `$ runner.py`
+Override settings in `config_local.py`. You may have to create `config_local.py`.
 
-## Development
-Enable pygame simulator in `config_local.py` (created by running `runner.py`)
+Enable the pygame simulator in `config_local.py`.
+
+Edit `runner.py` to show the plugins you want to display.
+
+# Writing A Plugin
+A plugin is a visualization that appears on the curtain.
+
+To write a plugin, copy an example from `plugins/` (`plugins/fancyrainbow.py`
+is a pretty simple example). Then add it to the list of background plugins in
+`runner.py`.
