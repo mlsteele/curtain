@@ -57,6 +57,7 @@ if config.ENABLE_BEATS:
             ck.set_color(0, r, g, b )
             ck.set_color(1, r, g, b )
             ck.set_color(2, r, g, b )
+            ck.update()
 
     #br = BeatReceiver("tcp://127.0.0.1:8000", callback=on_beat)
     br = BeatReceiver("tcp://*:8001", callback=on_beat)
