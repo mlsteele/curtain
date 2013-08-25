@@ -13,9 +13,9 @@ class BeatBlaster(object):
         self.publisher = self.ctx.socket(zmq.PUB)
 
         if self.audience:
-            self.publisher.bind(audience)
+            self.publisher.connect(audience)
         else:
-            self.publisher.bind("tcp://*:8000")
+            self.publisher.connect("tcp://*:8000")
 
         time.sleep(1)
 
