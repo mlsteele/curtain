@@ -41,8 +41,11 @@ class BeatBlaster(object):
         self.publisher.send_multipart(['c', beat_event.SerializeToString()], zmq.NOBLOCK)
 
 
-    def set_color(self, r = 0, g = 0, b =0):
+    def set_color(self, r = 0, g = 0, b = 0):
         beat_event = beat_event_pb2.BeatEvent()
+        beat_event.r = max(abs(r), 255)
+        beat_event.g = max(abs(g), 255)
+        beat_event.b = max(abs(b), 255)
         beat_event.type = beat_event_pb2.COLOR
         self.publisher.send_multipart(['C', beat_event.SerializeToString()], zmq.NOBLOCK)
 
@@ -55,6 +58,7 @@ class BeatBlaster(object):
 if __name__ == '__main__':
     try:
         n = BeatBlaster("tcp://*:8000")
+        n.set_color(255, 255, 255)
         while True:
             for bar in range(4):
                 n.beat(bar) 
