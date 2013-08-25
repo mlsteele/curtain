@@ -22,6 +22,6 @@ class Wave(Plugin):
                     *hsv_to_rgb(
                         like_sin(self.time + sin(x + self.time) + sin(y)),
                         1,
-                        1,
+                        0.5,
                     )
                 )

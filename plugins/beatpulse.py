@@ -10,19 +10,22 @@ class BeatPulse(Plugin):
     def __init__(self):
         super(BeatPulse, self).__init__()
         self.fading_number = 0
+	self.hue = 0
 
     def draw(self):
-        self.fading_number -= 0.05
+        self.fading_number -= 0.03
         self.fading_number = max(0, self.fading_number)
-
+	self.hue += 0.001	
         self.canvas.clear(
             *hsv_to_rgb(
-                0.25,
-                self.fading_number,
-                1,
+                self.hue,
+                1.0,
+                self.fading_number
             )
         )
 
     def recv_beat(self, beat_event):
         print beat_event
+	#self.hue += 0.03
+	self.hue = self.hue % 1
         self.fading_number = 1

@@ -40,7 +40,7 @@ class TwitterCrawler(threading.Thread):
                   access_token_key      = self.access_token_key,
                   access_token_secret   = self.access_token_secret)
 
-    def __init__(self, term = "#eastcampus",
+    def __init__(self, term = "from:eastcampusrush OR @eastcampusrush OR #eastcampus",
                  callback = None,
                  interval = 5,
                  count = 1):

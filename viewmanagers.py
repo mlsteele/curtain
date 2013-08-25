@@ -1,6 +1,6 @@
 import time
 from curtain import frame_length
-
+import config
 
 class SlideShow(object):
     """ Rotating list of plugins. """
@@ -62,19 +62,21 @@ class ViewManager(object):
 
     def start(self):
         """ Start the render loop. (blocking) """
+        print "ViewManager started"
         frame = 0
         while True:
             frame_start = time.clock()
             frame += 1
-            if self.active_plugin is None:
-                self.bg.step()
-                self.curtain.send_color_dict(self.bg.active_plugin.canvas)
-            else:
-                if self.active_plugin.is_done:
-                    self.active_plugin = None
+            if self.can_run():
+                if self.active_plugin is None:
+                    self.bg.step()
+                    self.curtain.send_color_dict(self.bg.active_plugin.canvas)
                 else:
-                    self.active_plugin.step()
-                    self.curtain.send_color_dict(self.active_plugin.canvas)
+                    if self.active_plugin.is_done:
+                        self.active_plugin = None
+                    else:
+                        self.active_plugin.step()
+                        self.curtain.send_color_dict(self.active_plugin.canvas)
             frame_end = time.clock()
             sleep_length = frame_length - (frame_end - frame_start)
             time.sleep(sleep_length)
@@ -89,7 +91,7 @@ class ViewManager(object):
 
         `plugin_constructor` is the plugin class.
         """
-        print "vm interrupted."
+        print "ViewManager interrupted."
         self.active_plugin = plugin_constructor()
         if not hasattr(self.active_plugin, 'is_done'):
             raise ValueError("Interrupt plugin must have an is_done property.")
@@ -101,3 +103,20 @@ class ViewManager(object):
         else:
             if hasattr(self.active_plugin, 'recv_beat'):
                 self.active_plugin.recv_beat(beat_event)
+
+    def can_run(self):
+        """
+        Decides whether the curtain is allowed to run.
+        For now, just takes into account quiet hours (in config.py)
+        """
+        if config.ENABLE_QUIET_HOURS:
+            current_time = int(time.strftime("%H%M"))
+            if config.QUIET_HOURS_START > config.QUIET_HOURS_END:
+                #Quiet hours include midnight
+                if current_time >= config.QUIET_HOURS_START or current_time <= config.QUIET_HOURS_END:
+                    return False
+            else:
+                #Quiet hours don't include midnight
+                if current_time >= config.QUIET_HOURS_END and current_time <= config.QUIET_HOURS_END:
+                    return False
+        return True
