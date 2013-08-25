@@ -37,15 +37,18 @@ class HeightLines(Plugin):
         # print heights
 
         # render
-        brightness = 0.5
         self.canvas.clear(*hsv_to_rgb(0, 0, 0))
         for x in xrange(width):
             for y in xrange(height):
                 if y < self.heights[x]:
                     self.canvas.draw_pixel(x, y, *hsv_to_rgb(
-                        0.45, 1, brightness
+                        0.65, 1, 0.02
                     ))
                 else:
                     self.canvas.draw_pixel(x, y, *hsv_to_rgb(
-                        random.choice([0.1, 0.05]), 1, brightness
+                        random.choice([0.1, 0.05]), 1, 0.4
                     ))
+
+    def recv_beat(self, beat_event):
+        # push all bars to top on beat.
+        self.heights = [0 for x in self.heights]

@@ -4,6 +4,13 @@ import config
 from curtain import width, height
 
 
+# Coordinates of broken pixels on the curtain.
+BROKEN_PIXELS_ALL = [(0, 4), (1,4), (2,4), (14,4), (13,4), (12,4)]
+BROKEN_PIXELS_RED = [(5, 1), (9, 1)]
+BROKEN_PIXELS_GREEN = [(2, 1), (1, 2), (9, 1), (12, 3)]
+BROKEN_PIXELS_BLUE = []
+
+
 class Cell(object):
     def __init__(self, position, size, padding):
         self.position = position
@@ -17,12 +24,18 @@ class Cell(object):
             self.size - self.padding,
         ))
         self.color = 150, 0, 0
+
     def set_color(self, r, g, b):
-        map_color = r, g, b
-        if self.position in broken_red: map_color[0] = 0
-        if self.position in broken_green: map_color[1] = 0
-        if self.position in broken_blue: map_color[2] = 0
-        self.color = map_color
+        if config.RENDER_FAULTS:
+            if self.position in BROKEN_PIXELS_ALL:
+                r, g, b = 0, 0, 0
+            if self.position in BROKEN_PIXELS_RED:
+                r = 0
+            if self.position in BROKEN_PIXELS_GREEN:
+                g = 0
+            if self.position in BROKEN_PIXELS_BLUE:
+                b = 0
+        self.color = r, g, b
 
 
 class PygameCurtain(object):
@@ -50,12 +63,7 @@ class PygameCurtain(object):
         for x in xrange(width):
             for y in xrange(height):
                 cell = self.cells[x][y]
-                if not config.RENDER_FAULTS:
-                    pygame.draw.rect(self.screen, cell.color, cell.rect)
-                else:
-                    BROKEN_PIXELS = [[0, 4], [1,4], [2,4], [14,4], [13,4], [12,4]]
-                    if [x, y] not in BROKEN_PIXELS:
-                        pygame.draw.rect(self.screen, cell.color, cell.rect)
+                pygame.draw.rect(self.screen, cell.color, cell.rect)
 
     def send_color_dict(self, color_dict):
         """
@@ -71,7 +79,11 @@ class PygameCurtain(object):
         #     print foo
         #     print type(foo)
         for (x, y), (r, g, b) in color_dict.items():
-            self.cells[x][y].color = r * 255, g * 255, b * 255
+            self.cells[x][y].set_color(
+                r * 255,
+                g * 255,
+                b * 255
+            )
 
         self._render_cells()
         pygame.display.flip()

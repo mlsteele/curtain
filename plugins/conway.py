@@ -33,7 +33,7 @@ class Conway(Plugin):
         for x in range(width):
             for y in range(height):
                 val = self.grid.cells[x][y]
-                brightness = val * 0.5
+                brightness = val * 0.3
                 self.canvas.draw_pixel(x, y, *hsv_to_rgb(
                     0, 0, brightness
                 ))
