@@ -17,6 +17,12 @@ class Cell(object):
             self.size - self.padding,
         ))
         self.color = 150, 0, 0
+    def set_color(self, r, g, b):
+        map_color = r, g, b
+        if self.position in broken_red: map_color[0] = 0
+        if self.position in broken_green: map_color[1] = 0
+        if self.position in broken_blue: map_color[2] = 0
+        self.color = map_color
 
 
 class PygameCurtain(object):
