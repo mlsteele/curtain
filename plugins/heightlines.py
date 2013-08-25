@@ -48,3 +48,7 @@ class HeightLines(Plugin):
                     self.canvas.draw_pixel(x, y, *hsv_to_rgb(
                         random.choice([0.1, 0.05]), 1, 0.4
                     ))
+
+    def recv_beat(self, beat_event):
+        # push all bars to top on beat.
+        self.heights = [0 for x in self.heights]
