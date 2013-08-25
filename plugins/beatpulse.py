@@ -1,7 +1,7 @@
 from curtain import width, height, brightness
 from letters import letters
 from plugin import Plugin
-from colorsys import hsv_to_rgb
+from colorsys import hsv_to_rgb, rgb_to_hsv
 import math, time, random
 from math import sin
 from beat_sender import beat_event_pb2
@@ -35,6 +35,9 @@ class BeatPulse(Plugin):
 
     def recv_beat(self, beat_event):
         if beat_event.type == beat_event_pb2.BEAT:
-            self.hue += 0.1
+            #self.hue += 0.1
             self.hue = self.hue % 1
             self.fading_number = 1
+        if beat_event.type == beat_event_pb2.COLOR:
+            print "COLOR UPDATE"
+            self.hue = rgb_to_hsv(beat_event.r, beat_event.g, beat_event.b)[0]
