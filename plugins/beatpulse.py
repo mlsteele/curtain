@@ -34,10 +34,9 @@ class BeatPulse(Plugin):
                 )
 
     def recv_beat(self, beat_event):
-        if beat_event.type == beat_event_pb2.BEAT:
-            #self.hue += 0.1
+        if beat_event.type == beat_event_pb2.SUB_BEAT:
+            self.hue += 0.01
             self.hue = self.hue % 1
             self.fading_number = 1
         if beat_event.type == beat_event_pb2.COLOR:
-            print "COLOR UPDATE"
             self.hue = rgb_to_hsv(beat_event.r, beat_event.g, beat_event.b)[0]
