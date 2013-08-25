@@ -15,6 +15,7 @@ from plugins.wave import Wave
 from plugins.beatpulse import BeatPulse
 from plugins.heightlines import HeightLines
 from plugins.conway import Conway
+from plugins.zthrough import ZThrough
 
 
 bg = SlideShow(period=15)
@@ -28,6 +29,7 @@ if config.ENABLE_BEATS:
 bg.add(Snakes)
 bg.add(SideScrollCreator("WELCOME TO EAST CAMPUS!"))
 bg.add(HeightLines)
+# bg.add(ZThrough)
 
 curtain = Curtain()
 vm = ViewManager(curtain=curtain, bg=bg)
