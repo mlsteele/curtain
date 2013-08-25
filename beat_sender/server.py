@@ -41,6 +41,12 @@ class BeatBlaster(object):
         self.publisher.send_multipart(['c', beat_event.SerializeToString()], zmq.NOBLOCK)
 
 
+    def set_color(self, r = 0, g = 0, b =0):
+        beat_event = beat_event_pb2.BeatEvent()
+        beat_event.type = beat_event_pb2.COLOR
+        self.publisher.send_multipart(['C', beat_event.SerializeToString()], zmq.NOBLOCK)
+
+
 
 
 

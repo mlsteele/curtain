@@ -2,6 +2,7 @@ enum BeatType {
     BEAT = 0;
     SUB_BEAT = 1;
     CHANGE_SCENE = 2;
+    COLOR = 3;
 }
 
 message BeatEvent{

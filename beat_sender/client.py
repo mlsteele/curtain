@@ -7,6 +7,7 @@ class BeatReceiver(threading.Thread):
                  beats = True,
                  sub_beats = False,
                  change_scene = False,
+                 color = False,
                  callback = False):
 
         self.callback = callback
@@ -22,12 +23,14 @@ class BeatReceiver(threading.Thread):
             self.sub.setsockopt(zmq.SUBSCRIBE, 's')
         if change_scene:
             self.sub.setsockopt(zmq.SUBSCRIBE, 'c')
+        if color:
+            self.sub.setsockopt(zmq.SUBSCRIBE, 'C')
         if sub:
-            self.sub.connect(sub)
-	    print "BeatReceiver Connected to %s " % sub
+            self.sub.bind(sub)
+	    print "BeatReceiver binded to %s " % sub
         else:
-            self.sub.connect("tcp://127.0.0.1:8000")
-            print "BeatReceiver connected."
+            self.sub.bind("tcp://127.0.0.1:8000")
+            print "BeatReceiver binded."
 
         time.sleep(1)
 
@@ -45,12 +48,13 @@ class BeatReceiver(threading.Thread):
             else:
                 if beat_event.type == beat_event_pb2.BEAT:
                     print "Beat"
-                pass
+                elif beat_event.type == beat_event_pb2.SUB:
+                    print "SS"
 
 
 
 if __name__ == '__main__':
-    n = BeatReceiver("tcp://127.0.0.1:8000", sub_beats = True)
+    n = BeatReceiver("tcp://127.0.0.1:8001", sub_beats = True)
     n.start()
 
     time.sleep(10)
