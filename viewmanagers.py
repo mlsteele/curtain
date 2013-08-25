@@ -114,9 +114,11 @@ class ViewManager(object):
             if config.QUIET_HOURS_START > config.QUIET_HOURS_END:
                 #Quiet hours include midnight
                 if current_time >= config.QUIET_HOURS_START or current_time <= config.QUIET_HOURS_END:
+                    print "In quiet hours"
                     return False
             else:
                 #Quiet hours don't include midnight
                 if current_time >= config.QUIET_HOURS_END and current_time <= config.QUIET_HOURS_END:
                     return False
+            print "Not in quiet hours"
         return True
