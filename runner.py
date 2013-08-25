@@ -15,6 +15,8 @@ from plugins.wave import Wave
 from plugins.beatpulse import BeatPulse
 from plugins.heightlines import HeightLines
 from plugins.conway import Conway
+from beat_sender import beat_event_pb2
+from ck import CK
 
 
 bg = SlideShow(period=15)
@@ -33,6 +35,8 @@ bg.add(HeightLines)
 curtain = Curtain()
 vm = ViewManager(curtain=curtain, bg=bg)
 
+ck = CK()
+
 if config.ENABLE_TWITTER:
     from twitter_client import TwitterCrawler
 
@@ -48,6 +52,11 @@ if config.ENABLE_BEATS:
 
     def on_beat(beat_event):
         vm.recv_beat(beat_event)
+        if beat_event.type = beat_event_pb2.COLOR:
+            (r, g, b) = beat_event.r, beat_event.g, beat_event.b
+            ck.set_color(0, r, g, b )
+            ck.set_color(1, r, g, b )
+            ck.set_color(2, r, g, b )
 
     #br = BeatReceiver("tcp://127.0.0.1:8000", callback=on_beat)
     br = BeatReceiver("tcp://*:8001", callback=on_beat)
