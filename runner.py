@@ -50,7 +50,7 @@ if config.ENABLE_BEATS:
         vm.recv_beat(beat_event)
 
     #br = BeatReceiver("tcp://127.0.0.1:8000", callback=on_beat)
-    br = BeatReceiver("tcp://*:8000", callback=on_beat)
+    br = BeatReceiver("tcp://*:8001", callback=on_beat)
     br.start()
 
 
