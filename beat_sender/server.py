@@ -15,7 +15,7 @@ class BeatBlaster(object):
         if self.audience:
             self.publisher.connect(audience)
         else:
-            self.publisher.connect("tcp://*:8000")
+            self.publisher.connect("tcp://*:8001")
 
         time.sleep(1)
 
@@ -57,7 +57,7 @@ class BeatBlaster(object):
 
 if __name__ == '__main__':
     try:
-        n = BeatBlaster("tcp://*:8000")
+        n = BeatBlaster("tcp://*:8001")
         n.set_color(255, 255, 255)
         while True:
             for bar in range(4):
