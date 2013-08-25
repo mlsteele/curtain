@@ -52,7 +52,7 @@ if config.ENABLE_BEATS:
 
     def on_beat(beat_event):
         vm.recv_beat(beat_event)
-        if beat_event.type = beat_event_pb2.COLOR:
+        if beat_event.type == beat_event_pb2.COLOR:
             (r, g, b) = beat_event.r, beat_event.g, beat_event.b
             ck.set_color(0, r, g, b )
             ck.set_color(1, r, g, b )
