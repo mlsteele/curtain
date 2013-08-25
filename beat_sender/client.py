@@ -29,7 +29,7 @@ class BeatReceiver(threading.Thread):
             self.sub.bind(sub)
 	    print "BeatReceiver binded to %s " % sub
         else:
-            self.sub.bind("tcp://127.0.0.1:8000")
+            self.sub.bind("tcp://127.0.0.1:8001")
             print "BeatReceiver binded."
 
         time.sleep(1)
@@ -48,13 +48,14 @@ class BeatReceiver(threading.Thread):
             else:
                 if beat_event.type == beat_event_pb2.BEAT:
                     print "Beat"
-                elif beat_event.type == beat_event_pb2.SUB:
-                    print "SS"
+                elif beat_event.type == beat_event_pb2.COLOR:
+                    print "COLOR", str((beat_event.r, beat_event.g,
+                                        beat_event.b))
 
 
 
 if __name__ == '__main__':
-    n = BeatReceiver("tcp://127.0.0.1:8001", sub_beats = True)
+    n = BeatReceiver("tcp://127.0.0.1:8001", sub_beats = True, color =True)
     n.start()
 
     time.sleep(10)

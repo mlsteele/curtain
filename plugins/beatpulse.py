@@ -4,6 +4,7 @@ from plugin import Plugin
 from colorsys import hsv_to_rgb
 import math, time, random
 from math import sin
+from beat_sender import beat_event_pb2
 
 
 class BeatPulse(Plugin):
@@ -33,7 +34,7 @@ class BeatPulse(Plugin):
                 )
 
     def recv_beat(self, beat_event):
-        print beat_event
-        self.hue += 0.1
-        self.hue = self.hue % 1
-        self.fading_number = 1
+        if beat_event.type == beat_event_pb2.BEAT:
+            self.hue += 0.1
+            self.hue = self.hue % 1
+            self.fading_number = 1
