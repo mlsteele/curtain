@@ -4,6 +4,13 @@ import config
 from curtain import width, height
 
 
+# Coordinates of broken pixels on the curtain.
+BROKEN_PIXELS_ALL = [(0, 4), (1,4), (2,4), (14,4), (13,4), (12,4)]
+BROKEN_PIXELS_RED = [(5, 1), (9, 1)]
+BROKEN_PIXELS_GREEN = [(2, 1), (1, 2), (9, 1), (12, 3)]
+BROKEN_PIXELS_BLUE = []
+
+
 class Cell(object):
     def __init__(self, position, size, padding):
         self.position = position
@@ -53,8 +60,7 @@ class PygameCurtain(object):
                 if not config.RENDER_FAULTS:
                     pygame.draw.rect(self.screen, cell.color, cell.rect)
                 else:
-                    BROKEN_PIXELS = [[0, 4], [1,4], [2,4], [14,4], [13,4], [12,4]]
-                    if [x, y] not in BROKEN_PIXELS:
+                    if (x, y) not in BROKEN_PIXELS_ALL:
                         pygame.draw.rect(self.screen, cell.color, cell.rect)
 
     def send_color_dict(self, color_dict):
