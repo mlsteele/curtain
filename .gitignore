@@ -2,3 +2,4 @@
 *.pyc
 twitter_config.ini
 config_local.py
+beat_sender/beat_event_pb2.py
