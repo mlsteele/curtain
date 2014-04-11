@@ -19,8 +19,9 @@ from beat_sender import beat_event_pb2
 from ck import CK
 
 
-bg = SlideShow(period=15)
+bg = SlideShow(period=25)
 bg.add(EC)
+bg.add(FancyRainbow) #REPEAT
 bg.add(Wave)
 bg.add(Snakes2)
 bg.add(FancyRainbow)
@@ -28,7 +29,8 @@ bg.add(Conway)
 if config.ENABLE_BEATS:
     bg.add(BeatPulse)
 bg.add(Snakes)
-bg.add(SideScrollCreator("WELCOME TO EAST CAMPUS!"))
+bg.add(FancyRainbow) #REPEAT
+bg.add(SideScrollCreator("Masquerade!"))
 bg.add(HeightLines)
 
 

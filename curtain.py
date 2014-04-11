@@ -9,7 +9,7 @@ height = 5
 frames_per_second = 30
 frame_length = 1.0 / frames_per_second
 
-brightness = 0.3 #0.012 dim  # 0.08 bright
+brightness = 0.03 #0.012 dim  # 0.08 bright
 
 id_grid = [[292, 418, 328, 256, 625],
            [529, 601, 592, 493, 319],

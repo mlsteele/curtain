@@ -14,7 +14,7 @@ class SideScroll(FinitePlugin):
     def draw(self):
         self.canvas.clear(*hsv_to_rgb(0, 0, 0))
         self.sst.draw(self.canvas)
-        self.sst.step(0.5)
+        self.sst.step(0.3)
         if self.sst.is_done:
             self.is_done = True
 
