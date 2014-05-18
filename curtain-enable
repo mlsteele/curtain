@@ -1,0 +1,2 @@
+#!/bin/bash
+ifconfig eth0:0 netmask 255.0.0.0 10.0.0.102
