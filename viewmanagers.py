@@ -50,6 +50,10 @@ class ViewManager(object):
 
     Control methods (like `interrupt`) must be called from a seperate thread
     as `start()` blocks the main thread.
+
+    lol, I just learned about thread safety in 005 and now I think that maybe
+    calling interrupt will break everything. But it's worked so far.
+    So take that, RM!
     """
     def __init__(self, curtain, bg):
         """
