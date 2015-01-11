@@ -55,7 +55,7 @@ class ViewManager(object):
     calling interrupt will break everything. But it's worked so far.
     So take that, RM!
     """
-    def __init__(self, curtain, bg):
+    def __init__(self, curtain, bg, brightness_factor=1):
         """
         `bg` is a `SlideShow` of plugins to run in the background.
         """
@@ -63,6 +63,7 @@ class ViewManager(object):
         self.bg = bg
         # False to watch background slidedshow.
         self.active_plugin = None
+        self.brightness_factor = brightness_factor
 
     def start(self):
         """ Start the render loop. (blocking) """
@@ -74,13 +75,13 @@ class ViewManager(object):
             if self.can_run():
                 if self.active_plugin is None:
                     self.bg.step()
-                    self.curtain.send_color_dict(self.bg.active_plugin.canvas)
+                    self.curtain.send_color_dict(self.bg.active_plugin.canvas.brightened(self.brightness_factor))
                 else:
                     if self.active_plugin.is_done:
                         self.active_plugin = None
                     else:
                         self.active_plugin.step()
-                        self.curtain.send_color_dict(self.active_plugin.canvas)
+                        self.curtain.send_color_dict(self.active_plugin.canvas.brightened(self.brightness_factor))
             frame_end = time.clock()
             sleep_length = frame_length - (frame_end - frame_start)
             time.sleep(sleep_length)

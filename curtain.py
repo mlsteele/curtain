@@ -93,3 +93,24 @@ class Canvas(dict):
         for x in range(self.width):
             for y in range(self.height):
                 self[x, y] = (r, g, b)
+
+    def copy(self):
+        """ Return a new copy of this canvas """
+        c = Canvas()
+        for x in range(self.width):
+            for y in range(self.height):
+                c[x, y] = self[x, y]
+        return c
+
+    def brighten(self, factor):
+        """ Returns a new curtain with colors multiplied by factor. """
+        for x in range(self.width):
+            for y in range(self.height):
+                r, g, b = self[x, y]
+                self[x, y] = (r*factor, g*factor, b*factor)
+
+    def brightened(self, factor):
+        """ Returns a new curtain with colors multiplied by factor. """
+        c = self.copy()
+        c.brighten(factor)
+        return c

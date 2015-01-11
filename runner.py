@@ -35,7 +35,8 @@ bg.add(HeightLines)
 
 
 curtain = Curtain()
-vm = ViewManager(curtain=curtain, bg=bg)
+# DUDE, IF YOU'RE WONDERING WHY IT'S DIM, RIGHT HERE.
+vm = ViewManager(curtain=curtain, bg=bg, brightness_factor=0.7)
 
 ck = CK()
 
