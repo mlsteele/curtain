@@ -20,17 +20,17 @@ from ck import CK
 
 
 bg = SlideShow(period=25)
-bg.add(EC)
-bg.add(FancyRainbow) #REPEAT
+# bg.add(EC)
+bg.add(FancyRainbow)
 bg.add(Wave)
 bg.add(Snakes2)
-bg.add(FancyRainbow)
-bg.add(Conway)
-if config.ENABLE_BEATS:
-    bg.add(BeatPulse)
-bg.add(Snakes)
-bg.add(FancyRainbow) #REPEAT
-bg.add(SideScrollCreator("Masquerade!"))
+# bg.add(FancyRainbow)
+# bg.add(Conway)
+# if config.ENABLE_BEATS:
+    # bg.add(BeatPulse)
+# bg.add(Snakes)
+# bg.add(FancyRainbow) #REPEAT
+bg.add(SideScrollCreator("Happy New Year!"))
 bg.add(HeightLines)
 
 
